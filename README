@@ -1,0 +1,3 @@
+Simple project to explore ocaml ffi
+
+Uses libmpd and libnotify to send notifications upon changes to mpd.
