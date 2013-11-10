@@ -6,9 +6,9 @@
 #include <caml/custom.h>
 
 value
-caml_ffi_test( value unit )
+caml_ffi_test( value i )
 {
-    CAMLparam1( unit );
-    printf( "%s\n", __FILE__ );
+    CAMLparam1( i );
+    printf( "%i\n", Int_val(i) );
     CAMLreturn( Val_unit );
 }

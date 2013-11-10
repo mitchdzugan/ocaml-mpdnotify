@@ -1,4 +1,4 @@
 open FfiTestModule
 
 let () =
-    ffi_test ();
+    ffi_test 5
