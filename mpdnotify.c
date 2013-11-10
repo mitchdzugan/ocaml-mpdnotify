@@ -10,15 +10,14 @@
  */
 int main () {
     notify_init ("MPD Notification");
-    NotifyNotification * Hello = notify_notification_new ("MPD Notification", "", "");
+    NotifyNotification * notification = notify_notification_new ("MPD Notification", "", "");
 
-    struct mpd_connection * conn;
+    struct mpd_connection * conn = mpd_connection_new("localhost", 6600, 0);
     struct mpd_status * status;
     struct mpd_song * song;
 
     GdkPixbuf * pix_buf;
     while (1) {
-        conn = mpd_connection_new("localhost", 6600, 0);
         mpd_run_idle(conn);
         status = mpd_run_status(conn);
         song = mpd_run_get_queue_song_id(conn, mpd_status_get_song_id(status));
@@ -28,14 +27,16 @@ int main () {
 
         pix_buf = gdk_pixbuf_new_from_file("", NULL);
 
-        notify_notification_update(Hello, title, album, "");
-        notify_notification_set_icon_from_pixbuf(Hello, pix_buf);
-        notify_notification_show (Hello, NULL);
+        notify_notification_update(notification, title, album, "");
+        notify_notification_set_icon_from_pixbuf(notification, pix_buf);
+        notify_notification_show (notification, NULL);
 
         mpd_status_free(status);
         mpd_song_free(song);
         g_object_unref(pix_buf);
     }
+
+    mpd_connection_free(conn);
 
     return 0;
 }
